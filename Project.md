@@ -1,5 +1,5 @@
 # Product Requirements Document (PRD)
-# Travel Mate — India's AI-First Travel Companion for Students
+# Campass — India's AI-First Travel Companion for Students
 
 **Version:** 1.0
 **Status:** Draft for Build
@@ -11,12 +11,12 @@
 
 ## 1. Product Vision
 
-Travel Mate is an AI-first travel planning and booking app built for India's student and budget-traveler segment. It replaces the scattered 10-app workflow (train booking → hotel app → maps → YouTube → budget calculator → cab app → translator) with a single **Smart Trip Plan**: an AI-generated itinerary, budget, and bookable options, combined with student-specific supply (dormitories, budget hotels) and a trust-building **Safety Hub**.
+Campass is an AI-first travel planning and booking app built for India's student and budget-traveler segment. It replaces the scattered 10-app workflow (train booking → hotel app → maps → YouTube → budget calculator → cab app → translator) with a single **Smart Trip Plan**: an AI-generated itinerary, budget, and bookable options, combined with student-specific supply (dormitories, budget hotels) and a trust-building **Safety Hub**.
 
 Long-term direction (per Idea Validation report): evolve from a planning + booking app into India's **Travel Operating System (Travel OS)**. This PRD scopes only the v1 MVP and near-term roadmap; the Travel OS vision is directional context, not a v1 commitment.
 
 **Positioning statement:**
-> For Indian students and budget travelers who juggle 8-10 apps to plan a trip, Travel Mate is an AI travel companion that plans, budgets, and books your trip in one place — unlike MakeMyTrip or Ixigo, which are booking-first with limited planning or student focus.
+> For Indian students and budget travelers who juggle 8-10 apps to plan a trip, Campass is an AI travel companion that plans, budgets, and books your trip in one place — unlike MakeMyTrip or Ixigo, which are booking-first with limited planning or student focus.
 
 ---
 
@@ -162,14 +162,14 @@ Per founder decision, v1 focuses on **two primary revenue streams**; all others 
 
 ## 10. Competitive Positioning (Summary)
 
-| Competitor | Gap Travel Mate Exploits |
+| Competitor | Gap Campass Exploits |
 |---|---|
 | MakeMyTrip, Goibibo, EaseMyTrip | Booking-first, weak/no AI planning, no student-specific supply |
 | Ixigo | Strong on trains, weak on end-to-end planning |
 | Google Maps/Search | No integrated booking or budget planning |
 | Booking.com, Agoda, Airbnb | No India-specific student/dorm focus, no Indian local transport integration |
 
-Travel Mate's differentiation is **AI-first planning + student-specific supply (dorms/budget hotels) + safety as a trust layer**, not trying to out-book the booking giants.
+Campass's differentiation is **AI-first planning + student-specific supply (dorms/budget hotels) + safety as a trust layer**, not trying to out-book the booking giants.
 
 ---
 
@@ -225,7 +225,7 @@ Market Opportunity 9.5, Demand 9.5, Differentiation 9, Revenue Potential 9, Scal
 | Timeline | Not fixed — quality over speed |
 | Tech stack | React Native, Supabase/Firebase, AI-assisted dev tools |
 | North Star metric | Smart Trip Plans generated + WAU/MAU |
-| App name | Travel Mate |
+| App name | Campass |
 
 ---
 
