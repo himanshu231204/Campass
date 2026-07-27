@@ -18,8 +18,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function CreateAccountScreen() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -33,7 +35,10 @@ export default function CreateAccountScreen() {
 
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
           <ChevronLeft size={20} color="#1e3a8a" />
         </TouchableOpacity>
 
@@ -124,7 +129,10 @@ export default function CreateAccountScreen() {
           </Text>
         </View>
 
-        <TouchableOpacity activeOpacity={0.9}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => router.replace("/(tabs)")}
+        >
           <LinearGradient
             colors={["#1e2a63", "#2a3f8f"]}
             start={{ x: 0, y: 0 }}
@@ -135,10 +143,12 @@ export default function CreateAccountScreen() {
           </LinearGradient>
         </TouchableOpacity>
 
-        <Text style={styles.footerText}>
-          Already have an account?{" "}
-          <Text style={styles.footerLink}>Sign in</Text>
-        </Text>
+        <TouchableOpacity onPress={() => router.push("/auth/login")}>
+          <Text style={styles.footerText}>
+            Already have an account?{" "}
+            <Text style={styles.footerLink}>Sign in</Text>
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

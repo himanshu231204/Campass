@@ -5,20 +5,19 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
   SafeAreaView,
   StatusBar,
 } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { User, Lock, Globe, Compass } from "lucide-react-native"
-
-const { width } = Dimensions.get("window")
+import { useRouter } from "expo-router"
 
 export default function SignInScreen() {
- 
+  const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
@@ -68,11 +67,17 @@ export default function SignInScreen() {
           />
         </View>
 
-        <TouchableOpacity style={styles.forgotWrapper}>
+        <TouchableOpacity
+          style={styles.forgotWrapper}
+          onPress={() => router.push("/auth/forgot-password")}
+        >
           <Text style={styles.forgotText}>Forgot password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity activeOpacity={0.9}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => router.replace("/(tabs)")}
+        >
           <LinearGradient
             colors={["#1e2a63", "#2a3f8f"]}
             start={{ x: 0, y: 0 }}
@@ -90,11 +95,11 @@ export default function SignInScreen() {
         </View>
 
         <View style={styles.socialRow}>
-          <TouchableOpacity style={styles.socialButton}>
+          <TouchableOpacity style={styles.socialButton} onPress={() => {}}>
             <Globe size={18} color="#3b82f6" />
             <Text style={styles.socialText}>Google</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.socialButton}>
+          <TouchableOpacity style={styles.socialButton} onPress={() => {}}>
             <Globe size={18} color="#3b82f6" />
             <Text style={styles.socialText}>Apple</Text>
           </TouchableOpacity>
@@ -102,9 +107,11 @@ export default function SignInScreen() {
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          New here? <Text style={styles.footerLink}>Create account</Text>
-        </Text>
+        <TouchableOpacity onPress={() => router.push("/auth/signup")}>
+          <Text style={styles.footerText}>
+            New here? <Text style={styles.footerLink}>Create account</Text>
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
