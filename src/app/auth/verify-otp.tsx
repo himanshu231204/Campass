@@ -10,9 +10,11 @@ import {
 } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { ChevronLeft, Phone } from "lucide-react-native"
+import { useRouter } from "expo-router"
 
 export default function VerifyOtpScreen() {
-  const [otp, setOtp] = useState<string[]>(["8", "3", "0", ""])
+  const router = useRouter()
+  const [otp, setOtp] = useState<string[]>(["", "", "", ""])
   const inputs = useRef<Array<TextInput | null>>([])
 
   const handleChange = (text: string, index: number) => {
@@ -30,7 +32,10 @@ export default function VerifyOtpScreen() {
 
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
           <ChevronLeft size={20} color="#1e3a8a" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Verify OTP</Text>
@@ -45,7 +50,7 @@ export default function VerifyOtpScreen() {
 
         <Text style={styles.title}>Verify your number</Text>
         <Text style={styles.subtitle}>
-          We sent a 4-digit code to +xx 9876x{"\n"}xxxxx
+          We sent a 4-digit code to your phone number
         </Text>
 
         <View style={styles.otpRow}>
@@ -69,7 +74,11 @@ export default function VerifyOtpScreen() {
           Didn&apos;t receive code? <Text style={styles.resendLink}>Resend in 0:48</Text>
         </Text>
 
-        <TouchableOpacity activeOpacity={0.9} style={styles.buttonWrapper}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={styles.buttonWrapper}
+          onPress={() => router.replace("/(tabs)")}
+        >
           <LinearGradient
             colors={["#1e2a63", "#2a3f8f"]}
             start={{ x: 0, y: 0 }}

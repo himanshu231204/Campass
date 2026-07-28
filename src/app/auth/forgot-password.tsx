@@ -9,9 +9,11 @@ import {
   StatusBar,
 } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
-import { Globe, Phone } from "lucide-react-native"
+import { ChevronLeft, Globe, Phone } from "lucide-react-native"
+import { useRouter } from "expo-router"
 
 export default function ForgetPasswordScreen() {
+  const router = useRouter()
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [otp, setOtp] = useState("")
@@ -20,7 +22,18 @@ export default function ForgetPasswordScreen() {
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="dark-content" />
 
-      <Text style={styles.headerTitle}>Forget Password</Text>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
+          <ChevronLeft size={20} color="#1e3a8a" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Forget Password</Text>
+        <View style={{ width: 36 }} />
+      </View>
+      <View style={styles.headerDivider} />
 
       <View style={styles.body}>
         <Text style={styles.label}>Email Address</Text>
@@ -65,7 +78,7 @@ export default function ForgetPasswordScreen() {
           />
         </View>
 
-        <TouchableOpacity style={styles.sendOtpWrapper}>
+        <TouchableOpacity style={styles.sendOtpWrapper} onPress={() => {}}>
           <Text style={styles.sendOtpText}>Send OTP</Text>
         </TouchableOpacity>
 
@@ -73,7 +86,11 @@ export default function ForgetPasswordScreen() {
           Didn&apos;t receive code? <Text style={styles.resendLink}>Resend in 0:48</Text>
         </Text>
 
-        <TouchableOpacity activeOpacity={0.9} style={styles.buttonWrapper}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={styles.buttonWrapper}
+          onPress={() => router.replace("/(tabs)")}
+        >
           <LinearGradient
             colors={["#1e2a63", "#2a3f8f"]}
             start={{ x: 0, y: 0 }}
@@ -93,12 +110,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+  },
+  backButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "#eef2fb",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   headerTitle: {
     fontSize: 18,
     fontWeight: "700",
     color: "#374151",
-    textAlign: "center",
-    paddingVertical: 18,
+  },
+  headerDivider: {
+    height: 1,
+    backgroundColor: "#f1f1f4",
   },
   body: {
     flex: 1,
