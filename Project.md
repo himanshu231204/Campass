@@ -31,17 +31,41 @@ India's AI-first travel planning app for students. Replaces 10-app workflow with
 
 ## Features (Phase 1 MVP)
 
-| Feature | Scope | Notes |
-|---------|-------|-------|
-| Smart Trip Plan (AI) | Itinerary + budget + bookable options | Chat + form input |
-| Train Search | Search + deep-link to IRCTC | No in-app booking v1 |
-| Hotel/Dorm Booking | Full in-app via aggregator | Key differentiator |
-| AI Budget Planner | Full trip cost estimation | Embedded in trip plan |
-| Maps & Local Transport | Destination maps + suggestions | Part of trip plan |
-| Offline Mode | Downloadable maps | Maps only, no AI offline |
-| Safety Hub | SOS, emergency contacts, live location | No hospitals/police v1 |
-| Multi-language | English, Hindi, + 2-3 regional | UI + AI responses |
-| Premium Subscription | ₹199-499/month | Unlimited plans, enhanced features |
+| Feature | Scope | Status |
+|---------|-------|--------|
+| Smart Trip Plan (AI) | Itinerary + budget + bookable options | ⚠️ UI only — "Plan with AI" card, hardcoded text |
+| Train Search | Search + deep-link to IRCTC | ⚠️ Search form + mock results list |
+| Hotel/Dorm Booking | Full in-app via aggregator | ❌ Not implemented |
+| AI Budget Planner | Full trip cost estimation | ⚠️ Static budget card with hardcoded numbers |
+| Maps & Local Transport | Destination maps + suggestions | ❌ Not implemented |
+| Offline Mode | Downloadable maps | ❌ Not implemented |
+| Safety Hub | SOS, emergency contacts, live location | ⚠️ SOS button + safety tips text |
+| Multi-language | English, Hindi, + 2-3 regional | ⚠️ `en` translation object ready, no language switcher |
+| Premium Subscription | ₹199-499/month | ❌ Not implemented |
+| Expense Tracking | Per-trip expense logs | ✅ Present (hidden, no nav entry) |
+| Profile & Stats | Trip count, reviews, loyalty points | ✅ ProfileScreen with 11-menu items |
+| Settings & Preferences | Language, currency, notifications, privacy | ✅ Fully interactive toggles |
+
+---
+
+## Current Screens (12 total, `src/app/(screens)/`)
+
+| Screen | Path | Key Features |
+|--------|------|-------------|
+| Home | `home/HomeScreen.tsx` | Quick book (5 modes), active trip card, budget snapshot, popular destinations, AI tip, SOS/Community/Maps actions |
+| Explore | `explore/ExploreScreen.tsx` | Category chips, trending 2-column grid, budget-friendly destinations |
+| Explore Details | `explore-details/ExploreDetailsScreen.tsx` | Hero + rating, tags, AI summary, weather, foods, attractions, restaurants, safety tips, budget impact |
+| Train Search | `train/TrainSearchScreen.tsx` | From/To/Date/Quota form, gradient CTA |
+| Book Train | `book-train/BookTrainScreen.tsx` | Route display, date selector, sort/filter chips, 8 mock trains with class selection |
+| Search Flights | `flights/SearchFlightsScreen.tsx` | One Way/Round Trip/Multi-City tabs, route form, quick book cards |
+| My Trips | `trips/MyTripsScreen.tsx` | Featured trip with progress, upcoming/past trip placeholders |
+| Trip Detail | `trip-detail/TripDetailScreen.tsx` | Itinerary/Budget/Map tabs, day-by-day timeline with costs & AI tips |
+| Budget Tracker | `budget/BudgetTrackerScreen.tsx` | Spent/remaining/left summary, 6 category breakdown bars, AI tip |
+| Expenses | `expenses/ExpensesScreen.tsx` | Today/Yesterday expense list with icons, amounts |
+| Profile | `profile/ProfileScreen.tsx` | Avatar, stats (12 trips/34 reviews/4,820 points), 11-item menu |
+| Settings | `settings/SettingsScreen.tsx` | Personal info, language, currency, notifications, privacy toggles |
+
+**Note:** All screens use static/mock data — zero API integrations, zero navigation wiring between screens, no actual AI capability.
 
 ---
 
@@ -51,7 +75,8 @@ India's AI-first travel planning app for students. Replaces 10-app workflow with
 - Full safety hub (Phase 2)
 - Offline AI (Phase 2+)
 - Community, AR, voice assistant
-- Flight booking, international travel
+- Hotel/dorm booking (Phase 1 PRD claim, not implemented)
+- International travel
 
 ---
 
