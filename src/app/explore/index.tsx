@@ -14,7 +14,6 @@ import {
 } from "lucide-react-native";
 import {
   Dimensions,
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -22,6 +21,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { layout } from "../../constants/layout";
 import {
   colors,
@@ -96,8 +96,10 @@ const budget = [
 
 export default function ExploreScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
+
   return (
-    <SafeAreaView style={styles.safe}>
+    <View style={[styles.safe, { paddingTop: insets.top }]}>
       <StatusBar barStyle="dark-content" />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -243,7 +245,7 @@ export default function ExploreScreen() {
           onPress={() => router.push("/profile")}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
