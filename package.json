@@ -52,8 +52,11 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
-    "test:constants": "jest src/__tests__/constants.test.ts"
+    "test:ci": "jest --coverage --ci",
+    "test:constants": "jest src/__tests__/constants.test.ts",
+    "build": "expo export"
   },
   "private": true
 }
