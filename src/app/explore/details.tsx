@@ -10,6 +10,7 @@ import {
   SafeAreaView,
 } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { useRouter } from "expo-router"
 import {
   ChevronLeft,
   Bookmark,
@@ -23,9 +24,12 @@ import {
   CloudSun,
   Utensils,
 } from "lucide-react-native"
+import { colors, fonts, spacing, radius, shadows, iconSize } from "../../constants/theme"
+import { en } from "../../translation/en"
+import { layout } from "../../constants/layout"
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window")
-const H_PADDING = 18
+const H_PADDING = spacing["2xl"]
 
 const tags = ["Hotels", "Flights", "Food", "Activities", "Nightlife"]
 
@@ -37,10 +41,10 @@ const weather = [
 ]
 
 const foods = [
-  { name: "Fish Curry Rice", price: "120", tag: "Must Try", accent: "#EA580C" },
-  { name: "Bebinca", price: "80", tag: "Dessert", accent: "#EA580C" },
-  { name: "Xacuti Chicken", price: "80", tag: "Dessert", accent: "#EA580C" },
-  { name: "Feni Cocktail", price: "80", tag: "Dessert", accent: "#EA580C" },
+  { name: "Fish Curry Rice", price: "120", tag: "Must Try", accent: colors.accentOrange },
+  { name: "Bebinca", price: "80", tag: "Dessert", accent: colors.accentOrange },
+  { name: "Xacuti Chicken", price: "80", tag: "Dessert", accent: colors.accentOrange },
+  { name: "Feni Cocktail", price: "80", tag: "Dessert", accent: colors.accentOrange },
 ]
 
 const attractions = [
@@ -51,7 +55,7 @@ const attractions = [
     entry: "Free",
     hours: "Open 24h",
     visit: "2-4 hrs",
-    colors: ["#1D4ED8", "#0EA5E9"],
+    colors: colors.gradientBlueSky,
   },
   {
     name: "Fort Aguada",
@@ -60,7 +64,7 @@ const attractions = [
     entry: "₹25",
     hours: "9AM-6PM",
     visit: "1-2 hrs",
-    colors: ["#B91C1C", "#F97316"],
+    colors: [colors.error, colors.warning] as [string, string],
   },
   {
     name: "Dudhsagar Falls",
@@ -69,7 +73,7 @@ const attractions = [
     entry: "₹400",
     hours: "7AM-5PM",
     visit: "3-5 hrs",
-    colors: ["#047857", "#10B981"],
+    colors: [colors.success, colors.successLight] as [string, string],
   },
 ]
 
@@ -85,10 +89,10 @@ const restaurants = [
 ]
 
 const safety = [
-  "Register valuables with your hostel on arrival.",
-  "Avoid isolated beaches after dark — stick to lit stretches.",
-  "Use app-based cabs at night; agree fares before boarding autos.",
-  "Emergency: 112 (national), 1363 (tourist helpline).",
+  en.safety.tip1,
+  en.safety.tip2,
+  en.safety.tip3,
+  en.safety.tip4,
 ]
 
 const budgetLines = [
@@ -100,71 +104,66 @@ const budgetLines = [
 ]
 
 export default function ExploreDetailsScreen() {
+  const router = useRouter()
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar barStyle="light-content" />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 40 }}
+        contentContainerStyle={{ paddingBottom: spacing["8xl"] }}
       >
-        {/* Hero */}
         <LinearGradient
-          colors={["#1D4ED8", "#0EA5E9"]}
+          colors={colors.gradientBlueSky}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.hero}
         >
           <View style={styles.heroTop}>
-            <View style={styles.heroBtn}>
-              <ChevronLeft size={20} color="#334155" />
-            </View>
+            <TouchableOpacity style={styles.heroBtn} onPress={() => router.back()}>
+              <ChevronLeft size={iconSize.lg} color={colors.textBody} />
+            </TouchableOpacity>
             <View style={styles.heroRight}>
               <View style={styles.heroBtn}>
-                <Bookmark size={18} color="#334155" />
+                <Bookmark size={iconSize.md} color={colors.textBody} />
               </View>
               <View style={styles.heroBtn}>
-                <Share2 size={18} color="#334155" />
+                <Share2 size={iconSize.md} color={colors.textBody} />
               </View>
             </View>
           </View>
-          <MapPin size={44} color="rgba(255,255,255,0.4)" style={styles.heroPin} />
+          <MapPin size={layout.statIcon.size} color={colors.whiteTransparent(0.4)} style={styles.heroPin} />
           <LinearGradient
-            colors={["#047857", "#10B981"]}
+            colors={[colors.success, colors.successLight] as [string, string]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.heroPill}
           />
         </LinearGradient>
-
-        {/* Title */}
         <View style={styles.titleRow}>
           <View style={{ flex: 1 }}>
             <Text style={styles.title}>Goa Beach Getaway</Text>
             <View style={styles.locRow}>
-              <MapPin size={14} color="#2563EB" />
+              <MapPin size={spacing.lg} color={colors.primaryMid} />
               <Text style={styles.locText}>North & South Goa, India</Text>
             </View>
           </View>
           <View style={{ alignItems: "flex-end" }}>
             <Text style={styles.price}>₹4,500</Text>
-            <Text style={styles.perPerson}>per person</Text>
+            <Text style={styles.perPerson}>{en.exploreDetails.perPerson}</Text>
           </View>
         </View>
-
         <View style={styles.reviewRow}>
           {[0, 1, 2, 3, 4].map((s) => (
             <Star
               key={s}
-              size={16}
-              color="#F59E0B"
-              fill={s < 4 ? "#F59E0B" : "none"}
+              size={iconSize.sm}
+              color={colors.accentAmber}
+              fill={s < 4 ? colors.accentAmber : "none"}
             />
           ))}
           <Text style={styles.ratingBold}>4.8</Text>
           <Text style={styles.reviewCount}>· 2,841 reviews</Text>
         </View>
-
-        {/* Tags */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -176,12 +175,10 @@ export default function ExploreDetailsScreen() {
             </View>
           ))}
         </ScrollView>
-
-        {/* AI Summary */}
         <View style={styles.aiCard}>
           <View style={styles.aiTitleRow}>
-            <Sparkles size={16} color="#2563EB" />
-            <Text style={styles.aiTitle}>AI Summary</Text>
+            <Sparkles size={iconSize.sm} color={colors.primaryMid} />
+            <Text style={styles.aiTitle}>{en.exploreDetails.aiSummary}</Text>
           </View>
           <Text style={styles.aiText}>
             Goa blends Portuguese heritage with India&apos;s most vibrant beach
@@ -190,13 +187,11 @@ export default function ExploreDetailsScreen() {
             beaches. Best explored over 4-5 days.
           </Text>
         </View>
-
-        {/* Best time / Language */}
         <View style={styles.infoRow}>
           <View style={styles.infoCard}>
             <View style={styles.infoHead}>
-              <CalendarDays size={15} color="#2563EB" />
-              <Text style={styles.infoLabel}>BEST TIME</Text>
+              <CalendarDays size={fonts.lg} color={colors.primaryMid} />
+              <Text style={styles.infoLabel}>{en.exploreDetails.bestTime}</Text>
             </View>
             <Text style={styles.infoValue}>November – February</Text>
             <Text style={styles.infoDesc}>
@@ -206,24 +201,22 @@ export default function ExploreDetailsScreen() {
           </View>
           <View style={styles.infoCard}>
             <View style={styles.infoHead}>
-              <Globe size={15} color="#2563EB" />
-              <Text style={styles.infoLabel}>LANGUAGE</Text>
+              <Globe size={fonts.lg} color={colors.primaryMid} />
+              <Text style={styles.infoLabel}>{en.exploreDetails.language}</Text>
             </View>
             <Text style={styles.infoValue}>Konkani, Portuguese (signs), Hindi, English widely spoken</Text>
           </View>
         </View>
-
-        {/* Weather */}
         <View style={styles.weatherCard}>
           <View style={styles.weatherHead}>
-            <CloudSun size={16} color="#2563EB" />
-            <Text style={styles.weatherTitle}>Weather Snapshot</Text>
+            <CloudSun size={iconSize.sm} color={colors.primaryMid} />
+            <Text style={styles.weatherTitle}>{en.exploreDetails.weatherSnapshot}</Text>
           </View>
           <View style={styles.weatherRow}>
             {weather.map((w, i) => (
               <View key={i} style={styles.weatherItem}>
                 <View style={styles.weatherIcon}>
-                  <w.Icon size={20} color="#F59E0B" />
+                  <w.Icon size={iconSize.lg} color={colors.accentAmber} />
                 </View>
                 <Text style={styles.weatherTemp}>{w.temp}</Text>
                 <Text style={styles.weatherMonth}>{w.month}</Text>
@@ -231,11 +224,9 @@ export default function ExploreDetailsScreen() {
             ))}
           </View>
         </View>
-
-        {/* Local Foods */}
         <View style={styles.sectionHeaderRow}>
-          <Text style={styles.sectionTitle}>Local Foods to Try</Text>
-          <Text style={styles.link}>See all</Text>
+          <Text style={styles.sectionTitle}>{en.exploreDetails.localFoodsToTry}</Text>
+          <Text style={styles.link}>{en.home.seeAll}</Text>
         </View>
         <ScrollView
           horizontal
@@ -245,7 +236,7 @@ export default function ExploreDetailsScreen() {
           {foods.map((f, i) => (
             <View key={i} style={styles.foodCard}>
               <View style={styles.foodIconWrap}>
-                <Utensils size={22} color="#F59E0B" />
+                <Utensils size={fonts["4xl"]} color={colors.accentAmber} />
               </View>
               <Text style={styles.foodName}>{f.name}</Text>
               <View style={styles.foodMetaRow}>
@@ -259,11 +250,9 @@ export default function ExploreDetailsScreen() {
             </View>
           ))}
         </ScrollView>
-
-        {/* Nearby Attractions */}
         <View style={styles.sectionHeaderRow}>
-          <Text style={styles.sectionTitle}>Nearby Attractions</Text>
-          <Text style={styles.link}>See all</Text>
+          <Text style={styles.sectionTitle}>{en.exploreDetails.nearbyAttractions}</Text>
+          <Text style={styles.link}>{en.home.seeAll}</Text>
         </View>
         {attractions.map((a, i) => (
           <View key={i} style={styles.attractionCard}>
@@ -275,8 +264,8 @@ export default function ExploreDetailsScreen() {
             >
               <Text style={styles.attractionBannerText}>{a.name}</Text>
               <MapPin
-                size={34}
-                color="rgba(255,255,255,0.4)"
+                size={layout.iconButton.small}
+                color={colors.whiteTransparent(0.4)}
                 style={styles.attractionPin}
               />
             </LinearGradient>
@@ -284,7 +273,7 @@ export default function ExploreDetailsScreen() {
               <View style={styles.attractionTitleRow}>
                 <Text style={styles.attractionName}>{a.name}</Text>
                 <View style={styles.ratingPill}>
-                  <Star size={12} color="#F59E0B" fill="#F59E0B" />
+                  <Star size={fonts.sm} color={colors.accentAmber} fill={colors.accentAmber} />
                   <Text style={styles.ratingText}>{a.rating}</Text>
                 </View>
               </View>
@@ -308,11 +297,9 @@ export default function ExploreDetailsScreen() {
             </View>
           </View>
         ))}
-
-        {/* Nearby Restaurants */}
         <View style={styles.sectionHeaderRow}>
-          <Text style={styles.sectionTitle}>Nearby Restaurants</Text>
-          <Text style={styles.link}>See all</Text>
+          <Text style={styles.sectionTitle}>{en.exploreDetails.nearbyRestaurants}</Text>
+          <Text style={styles.link}>{en.home.seeAll}</Text>
         </View>
         {restaurants.map((r, i) => (
           <View key={i} style={styles.restaurantCard}>
@@ -323,15 +310,13 @@ export default function ExploreDetailsScreen() {
               <Text style={styles.restaurantDist}>Dist: {r.dist}</Text>
               <View style={styles.restaurantRating}>
                 <Text style={styles.ratingText}>{r.rating}</Text>
-                <Star size={12} color="#F59E0B" fill="#F59E0B" />
+                <Star size={fonts.sm} color={colors.accentAmber} fill={colors.accentAmber} />
               </View>
             </View>
           </View>
         ))}
-
-        {/* Safety Tips */}
         <View style={styles.plainCard}>
-          <Text style={styles.plainTitle}>Safety Tips</Text>
+          <Text style={styles.plainTitle}>{en.exploreDetails.safetyTips}</Text>
           {safety.map((s, i) => (
             <View key={i} style={styles.safetyRow}>
               <Text style={styles.safetyNum}>{i + 1}</Text>
@@ -339,11 +324,9 @@ export default function ExploreDetailsScreen() {
             </View>
           ))}
         </View>
-
-        {/* Budget Impact */}
         <View style={styles.plainCard}>
           <View style={styles.budgetHead}>
-            <Text style={styles.plainTitle}>Budget Impact</Text>
+            <Text style={styles.plainTitle}>{en.exploreDetails.budgetImpact}</Text>
             <Text style={styles.budgetRange}>₹4,500 – ₹12,000 / trip</Text>
           </View>
           {budgetLines.map((b, i) => (
@@ -363,32 +346,29 @@ export default function ExploreDetailsScreen() {
             </View>
           </View>
         </View>
-
-        {/* Save / Add */}
         <View style={styles.ctaRow}>
           <TouchableOpacity style={styles.saveBtn} activeOpacity={0.8}>
-            <Text style={styles.saveBtnText}>Save Place</Text>
+            <Text style={styles.saveBtnText}>{en.exploreDetails.savePlace}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ flex: 1 }} activeOpacity={0.85}>
+          <TouchableOpacity style={{ flex: 1 }} activeOpacity={0.85} onPress={() => router.push("/trips")}>
             <LinearGradient
-              colors={["#1E3A8A", "#1E40AF"]}
+              colors={colors.gradientHeader}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={styles.addBtn}
             >
-              <Text style={styles.addBtnText}>+ Add to Trip</Text>
+              <Text style={styles.addBtnText}>{en.exploreDetails.addToTrip}</Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity activeOpacity={0.9} style={{ marginHorizontal: H_PADDING }}>
+        <TouchableOpacity activeOpacity={0.9} style={{ marginHorizontal: H_PADDING }} onPress={() => router.push("/budget")}>
           <LinearGradient
-            colors={["#F97316", "#F59E0B"]}
+            colors={[colors.warning, colors.accentAmber] as [string, string]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.planBtn}
           >
-            <Text style={styles.planBtnText}>Plan Trip to Goa with AI</Text>
+            <Text style={styles.planBtnText}>{en.exploreDetails.planTripWithAI}</Text>
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>
@@ -397,346 +377,331 @@ export default function ExploreDetailsScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#EEF2F9" },
-
+  safe: { flex: 1, backgroundColor: colors.backgroundMuted },
   hero: {
     height: 220,
     paddingHorizontal: H_PADDING,
-    paddingTop: 12,
+    paddingTop: spacing.lg,
   },
   heroTop: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  heroRight: { flexDirection: "row", gap: 10 },
+  heroRight: { flexDirection: "row", gap: spacing.md },
   heroBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(255,255,255,0.9)",
+    width: layout.iconButton.size,
+    height: layout.iconButton.size,
+    borderRadius: layout.iconButton.radius,
+    backgroundColor: colors.whiteTransparent(0.9),
     alignItems: "center",
     justifyContent: "center",
   },
   heroPin: { position: "absolute", top: 80, alignSelf: "center" },
   heroPill: {
     position: "absolute",
-    bottom: 20,
+    bottom: spacing["3xl"],
     left: H_PADDING,
     right: H_PADDING,
-    height: 34,
-    borderRadius: 18,
+    height: layout.iconButton.small,
+    borderRadius: radius["2xl"],
   },
-
   titleRow: {
     flexDirection: "row",
     paddingHorizontal: H_PADDING,
-    marginTop: 16,
+    marginTop: spacing.xl,
     alignItems: "flex-start",
   },
-  title: { fontSize: 22, fontWeight: "800", color: "#0F172A" },
-  locRow: { flexDirection: "row", alignItems: "center", gap: 4, marginTop: 6 },
-  locText: { fontSize: 13, color: "#64748B" },
-  price: { fontSize: 22, fontWeight: "800", color: "#1E40AF" },
-  perPerson: { fontSize: 11, color: "#94A3B8" },
-
+  title: { fontSize: fonts["4xl"], fontWeight: fonts.weight.extrabold, color: colors.textDark },
+  locRow: { flexDirection: "row", alignItems: "center", gap: spacing.xs, marginTop: spacing.sm },
+  locText: { fontSize: fonts.md, color: colors.textSub },
+  price: { fontSize: fonts["4xl"], fontWeight: fonts.weight.extrabold, color: colors.primary },
+  perPerson: { fontSize: fonts.xs, color: colors.textGray },
   reviewRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 3,
+    gap: spacing.xs,
     paddingHorizontal: H_PADDING,
-    marginTop: 10,
+    marginTop: spacing.md,
   },
   ratingBold: {
-    fontSize: 14,
-    fontWeight: "700",
-    color: "#0F172A",
-    marginLeft: 6,
+    fontSize: fonts.base,
+    fontWeight: fonts.weight.bold,
+    color: colors.textDark,
+    marginLeft: spacing.sm,
   },
-  reviewCount: { fontSize: 13, color: "#94A3B8" },
-
+  reviewCount: { fontSize: fonts.md, color: colors.textGray },
   tagRow: {
     paddingHorizontal: H_PADDING,
-    gap: 8,
-    marginTop: 14,
+    gap: spacing.sm,
+    marginTop: spacing.lg,
   },
   tag: {
-    paddingHorizontal: 14,
-    paddingVertical: 7,
-    borderRadius: 16,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.lg,
     borderWidth: 1,
-    borderColor: "#DBEAFE",
-    backgroundColor: "#EFF6FF",
+    borderColor: colors.bgLightBlue,
+    backgroundColor: colors.backgroundInput,
   },
-  tagText: { fontSize: 12, fontWeight: "600", color: "#2563EB" },
-
+  tagText: { fontSize: fonts.sm, fontWeight: fonts.weight.semibold, color: colors.primaryMid },
   aiCard: {
     marginHorizontal: H_PADDING,
-    marginTop: 18,
-    backgroundColor: "#EFF6FF",
-    borderRadius: 16,
+    marginTop: spacing["2xl"],
+    backgroundColor: colors.backgroundInput,
+    borderRadius: radius.lg,
     borderWidth: 1,
-    borderColor: "#BFDBFE",
-    padding: 16,
+    borderColor: colors.borderLight,
+    padding: spacing.xl,
   },
-  aiTitleRow: { flexDirection: "row", alignItems: "center", gap: 6 },
-  aiTitle: { fontSize: 14, fontWeight: "700", color: "#1E40AF" },
-  aiText: { fontSize: 13, color: "#475569", lineHeight: 20, marginTop: 8 },
-
+  aiTitleRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
+  aiTitle: { fontSize: fonts.base, fontWeight: fonts.weight.bold, color: colors.primary },
+  aiText: { fontSize: fonts.md, color: colors.textBodySecondary, lineHeight: spacing["3xl"], marginTop: spacing.sm },
   infoRow: {
     flexDirection: "row",
     paddingHorizontal: H_PADDING,
-    gap: 12,
-    marginTop: 16,
+    gap: spacing.lg,
+    marginTop: spacing.xl,
   },
   infoCard: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 14,
-    padding: 14,
+    backgroundColor: colors.background,
+    borderRadius: spacing.lg,
+    padding: spacing.lg,
   },
-  infoHead: { flexDirection: "row", alignItems: "center", gap: 6 },
+  infoHead: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
   infoLabel: {
-    fontSize: 11,
-    fontWeight: "700",
-    color: "#64748B",
+    fontSize: fonts.xs,
+    fontWeight: fonts.weight.bold,
+    color: colors.textSub,
     letterSpacing: 0.5,
   },
   infoValue: {
-    fontSize: 14,
-    fontWeight: "700",
-    color: "#0F172A",
-    marginTop: 8,
+    fontSize: fonts.base,
+    fontWeight: fonts.weight.bold,
+    color: colors.textDark,
+    marginTop: spacing.sm,
   },
-  infoDesc: { fontSize: 11, color: "#94A3B8", marginTop: 6, lineHeight: 16 },
-
+  infoDesc: { fontSize: fonts.xs, color: colors.textGray, marginTop: spacing.xs, lineHeight: spacing.xl },
   weatherCard: {
     marginHorizontal: H_PADDING,
-    marginTop: 14,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    padding: 16,
+    marginTop: spacing.lg,
+    backgroundColor: colors.background,
+    borderRadius: radius.lg,
+    padding: spacing.xl,
   },
-  weatherHead: { flexDirection: "row", alignItems: "center", gap: 6 },
-  weatherTitle: { fontSize: 14, fontWeight: "700", color: "#0F172A" },
+  weatherHead: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
+  weatherTitle: { fontSize: fonts.base, fontWeight: fonts.weight.bold, color: colors.textDark },
   weatherRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 14,
+    marginTop: spacing.lg,
   },
   weatherItem: { alignItems: "center", flex: 1 },
   weatherIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: "#FEF3C7",
+    width: layout.statIcon.size,
+    height: layout.statIcon.size,
+    borderRadius: layout.statIcon.radius,
+    backgroundColor: colors.bgOrangeLight,
     alignItems: "center",
     justifyContent: "center",
   },
   weatherTemp: {
-    fontSize: 13,
-    fontWeight: "700",
-    color: "#0F172A",
-    marginTop: 8,
+    fontSize: fonts.md,
+    fontWeight: fonts.weight.bold,
+    color: colors.textDark,
+    marginTop: spacing.sm,
   },
-  weatherMonth: { fontSize: 11, color: "#94A3B8", marginTop: 2 },
-
+  weatherMonth: { fontSize: fonts.xs, color: colors.textGray, marginTop: spacing.xs },
   sectionHeaderRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: H_PADDING,
-    marginTop: 24,
-    marginBottom: 14,
+    marginTop: spacing["5xl"],
+    marginBottom: spacing.lg,
   },
-  sectionTitle: { fontSize: 17, fontWeight: "700", color: "#0F172A" },
-  link: { fontSize: 13, fontWeight: "600", color: "#2563EB" },
-
-  foodRow: { paddingHorizontal: H_PADDING, gap: 12 },
+  sectionTitle: { fontSize: fonts.xl, fontWeight: fonts.weight.bold, color: colors.textDark },
+  link: { fontSize: fonts.md, fontWeight: fonts.weight.semibold, color: colors.primaryMid },
+  foodRow: { paddingHorizontal: H_PADDING, gap: spacing.lg },
   foodCard: {
     width: 140,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    padding: 12,
+    backgroundColor: colors.background,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
   },
   foodIconWrap: {
     height: 60,
-    borderRadius: 12,
-    backgroundColor: "#FEF9C3",
+    borderRadius: radius.md,
+    backgroundColor: colors.bgOrangeLight,
     alignItems: "center",
     justifyContent: "center",
   },
   foodName: {
-    fontSize: 13,
-    fontWeight: "700",
-    color: "#0F172A",
-    marginTop: 10,
+    fontSize: fonts.md,
+    fontWeight: fonts.weight.bold,
+    color: colors.textDark,
+    marginTop: spacing.md,
   },
   foodMetaRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 8,
+    marginTop: spacing.sm,
   },
-  foodPrice: { fontSize: 12, fontWeight: "700", color: "#2563EB" },
+  foodPrice: { fontSize: fonts.sm, fontWeight: fonts.weight.bold, color: colors.primaryMid },
   foodTag: {
-    backgroundColor: "#FFEDD5",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
+    backgroundColor: colors.bgOrangeLight,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.md,
   },
-  foodTagText: { fontSize: 11, fontWeight: "700" },
-
+  foodTagText: { fontSize: fonts.xs, fontWeight: fonts.weight.bold },
   attractionCard: {
     marginHorizontal: H_PADDING,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    marginBottom: 14,
+    backgroundColor: colors.background,
+    borderRadius: radius.lg,
+    marginBottom: spacing.lg,
     overflow: "hidden",
   },
   attractionBanner: {
-    height: 90,
-    padding: 12,
+    height: layout.header.height,
+    padding: spacing.lg,
     justifyContent: "flex-end",
   },
   attractionPin: { position: "absolute", top: 26, alignSelf: "center" },
-  attractionBannerText: { color: "#FFFFFF", fontWeight: "700", fontSize: 15 },
-  attractionBody: { padding: 14 },
+  attractionBannerText: { color: colors.white, fontWeight: fonts.weight.bold, fontSize: fonts.lg },
+  attractionBody: { padding: spacing.lg },
   attractionTitleRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  attractionName: { fontSize: 16, fontWeight: "700", color: "#0F172A" },
-  ratingPill: { flexDirection: "row", alignItems: "center", gap: 3 },
-  ratingText: { fontSize: 12, fontWeight: "700", color: "#334155" },
+  attractionName: { fontSize: fonts.xl, fontWeight: fonts.weight.bold, color: colors.textDark },
+  ratingPill: { flexDirection: "row", alignItems: "center", gap: spacing.xs },
+  ratingText: { fontSize: fonts.sm, fontWeight: fonts.weight.bold, color: colors.textBody },
   attractionTag: {
     alignSelf: "flex-start",
-    backgroundColor: "#EFF6FF",
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-    borderRadius: 12,
-    marginTop: 8,
+    backgroundColor: colors.backgroundInput,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.md,
+    marginTop: spacing.sm,
   },
-  attractionTagText: { fontSize: 12, fontWeight: "600", color: "#2563EB" },
+  attractionTagText: { fontSize: fonts.sm, fontWeight: fonts.weight.semibold, color: colors.primaryMid },
   metaRow: {
     flexDirection: "row",
-    marginTop: 14,
-    gap: 8,
+    marginTop: spacing.lg,
+    gap: spacing.sm,
   },
   metaCol: {
     flex: 1,
-    backgroundColor: "#F1F5F9",
-    borderRadius: 10,
-    padding: 10,
+    backgroundColor: colors.backgroundMuted,
+    borderRadius: spacing.md,
+    padding: spacing.md,
   },
   metaLabel: {
-    fontSize: 10,
-    fontWeight: "700",
-    color: "#94A3B8",
+    fontSize: fonts.xs,
+    fontWeight: fonts.weight.bold,
+    color: colors.textGray,
     letterSpacing: 0.5,
   },
   metaValue: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: "#334155",
-    marginTop: 4,
+    fontSize: fonts.sm,
+    fontWeight: fonts.weight.semibold,
+    color: colors.textBody,
+    marginTop: spacing.xs,
   },
-
   restaurantCard: {
     flexDirection: "row",
-    gap: 14,
+    gap: spacing.lg,
     marginHorizontal: H_PADDING,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    padding: 12,
-    marginBottom: 14,
+    backgroundColor: colors.background,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
+    marginBottom: spacing.lg,
   },
   restaurantImg: {
     width: 90,
     height: 90,
-    borderRadius: 12,
-    backgroundColor: "#3B82F6",
+    borderRadius: radius.md,
+    backgroundColor: colors.primaryLight,
   },
-  restaurantName: { fontSize: 16, fontWeight: "700", color: "#0F172A" },
-  restaurantType: { fontSize: 13, color: "#64748B", marginTop: 4 },
-  restaurantDist: { fontSize: 13, color: "#334155", marginTop: 4 },
+  restaurantName: { fontSize: fonts.xl, fontWeight: fonts.weight.bold, color: colors.textDark },
+  restaurantType: { fontSize: fonts.md, color: colors.textSub, marginTop: spacing.xs },
+  restaurantDist: { fontSize: fonts.md, color: colors.textBody, marginTop: spacing.xs },
   restaurantRating: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 3,
+    gap: spacing.xs,
     alignSelf: "flex-end",
-    marginTop: -14,
+    marginTop: -spacing.lg,
   },
-
   plainCard: {
     marginHorizontal: H_PADDING,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    padding: 16,
-    marginTop: 8,
-    marginBottom: 14,
+    backgroundColor: colors.background,
+    borderRadius: radius.lg,
+    padding: spacing.xl,
+    marginTop: spacing.sm,
+    marginBottom: spacing.lg,
   },
-  plainTitle: { fontSize: 15, fontWeight: "700", color: "#0F172A" },
-  safetyRow: { flexDirection: "row", gap: 10, marginTop: 12 },
-  safetyNum: { fontSize: 12, color: "#94A3B8", width: 14 },
-  safetyText: { flex: 1, fontSize: 12, color: "#64748B", lineHeight: 17 },
-
+  plainTitle: { fontSize: fonts.lg, fontWeight: fonts.weight.bold, color: colors.textDark },
+  safetyRow: { flexDirection: "row", gap: spacing.md, marginTop: spacing.lg },
+  safetyNum: { fontSize: fonts.sm, color: colors.textGray, width: 14 },
+  safetyText: { flex: 1, fontSize: fonts.sm, color: colors.textSub, lineHeight: 17 },
   budgetHead: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  budgetRange: { fontSize: 13, fontWeight: "700", color: "#1E40AF" },
+  budgetRange: { fontSize: fonts.md, fontWeight: fonts.weight.bold, color: colors.primary },
   budgetLine: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 12,
+    marginTop: spacing.lg,
   },
-  budgetLineLabel: { fontSize: 13, color: "#64748B" },
-  budgetLineValue: { fontSize: 13, fontWeight: "700", color: "#0F172A" },
-  budgetFootRow: { flexDirection: "row", gap: 12, marginTop: 16 },
+  budgetLineLabel: { fontSize: fonts.md, color: colors.textSub },
+  budgetLineValue: { fontSize: fonts.md, fontWeight: fonts.weight.bold, color: colors.textDark },
+  budgetFootRow: { flexDirection: "row", gap: spacing.lg, marginTop: spacing.xl },
   budgetFootCol: {
     flex: 1,
-    backgroundColor: "#F1F5F9",
-    borderRadius: 10,
-    padding: 10,
+    backgroundColor: colors.backgroundMuted,
+    borderRadius: spacing.md,
+    padding: spacing.md,
   },
-  budgetFootLabel: { fontSize: 11, color: "#94A3B8" },
+  budgetFootLabel: { fontSize: fonts.xs, color: colors.textGray },
   budgetFootValue: {
-    fontSize: 12,
-    fontWeight: "700",
-    color: "#334155",
-    marginTop: 4,
+    fontSize: fonts.sm,
+    fontWeight: fonts.weight.bold,
+    color: colors.textBody,
+    marginTop: spacing.xs,
   },
-
   ctaRow: {
     flexDirection: "row",
-    gap: 12,
+    gap: spacing.lg,
     paddingHorizontal: H_PADDING,
-    marginTop: 8,
-    marginBottom: 12,
+    marginTop: spacing.sm,
+    marginBottom: spacing.lg,
   },
   saveBtn: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#CBD5E1",
-    borderRadius: 14,
-    paddingVertical: 15,
+    borderColor: colors.textLight,
+    borderRadius: spacing.lg,
+    paddingVertical: spacing.xl,
     alignItems: "center",
   },
-  saveBtnText: { fontSize: 14, fontWeight: "700", color: "#334155" },
+  saveBtnText: { fontSize: fonts.base, fontWeight: fonts.weight.bold, color: colors.textBody },
   addBtn: {
-    borderRadius: 14,
-    paddingVertical: 15,
+    borderRadius: spacing.lg,
+    paddingVertical: spacing.xl,
     alignItems: "center",
   },
-  addBtnText: { fontSize: 14, fontWeight: "700", color: "#FFFFFF" },
-
+  addBtnText: { fontSize: fonts.base, fontWeight: fonts.weight.bold, color: colors.white },
   planBtn: {
-    borderRadius: 16,
-    paddingVertical: 16,
+    borderRadius: radius.lg,
+    paddingVertical: spacing.xl,
     alignItems: "center",
   },
-  planBtnText: { fontSize: 15, fontWeight: "800", color: "#FFFFFF" },
+  planBtnText: { fontSize: fonts.lg, fontWeight: fonts.weight.extrabold, color: colors.white },
 })

@@ -11,6 +11,8 @@ import {
 import { LinearGradient } from "expo-linear-gradient"
 import { User, Lock, Globe, Compass } from "lucide-react-native"
 import { useRouter } from "expo-router"
+import { colors, fonts, spacing, radius, shadows, iconSize } from "@/constants/theme"
+import { en } from "@/translation/en"
 
 export default function SignInScreen() {
   const router = useRouter()
@@ -19,238 +21,225 @@ export default function SignInScreen() {
   const [loading, setLoading] = useState(false)
 
   return (
-    <View style={styles.root}>
+    <SafeAreaView style={styles.root}>
       <StatusBar barStyle="light-content" />
-
-      {/* Header */}
       <LinearGradient
-        colors={["#1e3a8a", "#243b7a"]}
+        colors={colors.gradientPrimary}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.header}
       >
-        <SafeAreaView>
-          <View style={styles.logoBox}>
-            <Compass size={30} color="#ffffff" />
-          </View>
-          <Text style={styles.welcomeTitle}>WELCOME BACK</Text>
-          <Text style={styles.welcomeSub}>Yours Next Adventure Awaits</Text>
-        </SafeAreaView>
+        <View style={styles.logoBox}>
+          <Compass size={iconSize["2xl"]} color={colors.white} />
+        </View>
+        <Text style={styles.welcomeTitle}>{en.auth.welcomeBack}</Text>
+        <Text style={styles.welcomeSub}>{en.auth.nextAdventure}</Text>
       </LinearGradient>
-
-      {/* Body */}
       <View style={styles.body}>
-        <Text style={styles.label}>Email Address / Mobile</Text>
+        <Text style={styles.label}>{en.auth.emailMobile}</Text>
         <View style={styles.inputWrapper}>
-          <User size={18} color="#3b82f6" />
+          <User size={iconSize.md} color={colors.primaryLight} />
           <TextInput
             style={styles.input}
-            placeholder="student@college.edu"
-            placeholderTextColor="#9ca3af"
+            placeholder={en.auth.emailPlaceholder}
+            placeholderTextColor={colors.textMuted}
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
             keyboardType="email-address"
           />
         </View>
-
-        <Text style={[styles.label, { marginTop: 20 }]}>Password</Text>
+        <Text style={[styles.label, { marginTop: spacing["3xl"] }]}>
+          {en.auth.password}
+        </Text>
         <View style={styles.inputWrapper}>
-          <Lock size={18} color="#3b82f6" />
+          <Lock size={iconSize.md} color={colors.primaryLight} />
           <TextInput
             style={styles.input}
             placeholder="••••••••"
-            placeholderTextColor="#9ca3af"
+            placeholderTextColor={colors.textMuted}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
           />
         </View>
-
         <TouchableOpacity
           style={styles.forgotWrapper}
           onPress={() => router.push("/auth/forgot-password")}
         >
-          <Text style={styles.forgotText}>Forgot password?</Text>
+          <Text style={styles.forgotText}>{en.auth.forgotPassword}</Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() => router.replace("/(tabs)")}
+          onPress={() => router.replace("/home")}
         >
           <LinearGradient
-            colors={["#1e2a63", "#2a3f8f"]}
+            colors={colors.gradientButton}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.primaryButton}
           >
-            <Text style={styles.primaryButtonText}>Sign In</Text>
+            <Text style={styles.primaryButtonText}>{en.auth.signIn}</Text>
           </LinearGradient>
         </TouchableOpacity>
-
         <View style={styles.dividerRow}>
           <View style={styles.divider} />
-          <Text style={styles.dividerText}>or continue with</Text>
+          <Text style={styles.dividerText}>{en.auth.orContinueWith}</Text>
           <View style={styles.divider} />
         </View>
-
         <View style={styles.socialRow}>
           <TouchableOpacity style={styles.socialButton} onPress={() => {}}>
-            <Globe size={18} color="#3b82f6" />
-            <Text style={styles.socialText}>Google</Text>
+            <Globe size={iconSize.md} color={colors.primaryLight} />
+            <Text style={styles.socialText}>{en.auth.google}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.socialButton} onPress={() => {}}>
-            <Globe size={18} color="#3b82f6" />
-            <Text style={styles.socialText}>Apple</Text>
+            <Globe size={iconSize.md} color={colors.primaryLight} />
+            <Text style={styles.socialText}>{en.auth.apple}</Text>
           </TouchableOpacity>
         </View>
       </View>
-
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => router.push("/auth/signup")}>
           <Text style={styles.footerText}>
-            New here? <Text style={styles.footerLink}>Create account</Text>
+            {en.auth.newHere}{" "}
+            <Text style={styles.footerLink}>{en.auth.createAccount}</Text>
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: colors.background,
   },
   header: {
-    paddingTop: 40,
-    paddingBottom: 30,
-    paddingHorizontal: 28,
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
+    paddingTop: spacing["8xl"],
+    paddingBottom: spacing["7xl"],
+    paddingHorizontal: spacing["6xl"],
+    borderBottomLeftRadius: radius.sm,
+    borderBottomRightRadius: radius.sm,
   },
   logoBox: {
     width: 64,
     height: 64,
-    borderRadius: 18,
-    backgroundColor: "rgba(255,255,255,0.12)",
+    borderRadius: radius.xl,
+    backgroundColor: colors.whiteTransparent(0.12),
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
+    marginTop: spacing.md,
   },
   welcomeTitle: {
-    color: "#ffffff",
-    fontSize: 24,
-    fontWeight: "600",
+    color: colors.white,
+    fontSize: fonts["5xl"],
+    fontWeight: fonts.weight.semibold,
     letterSpacing: 1,
-    marginTop: 18,
+    marginTop: spacing["2xl"],
   },
   welcomeSub: {
-    color: "#c7d2fe",
-    fontSize: 13,
-    marginTop: 4,
+    color: colors.whiteTransparent(0.75),
+    fontSize: fonts.md,
+    marginTop: spacing.xs,
   },
   body: {
     flex: 1,
-    paddingHorizontal: 28,
-    paddingTop: 28,
+    paddingHorizontal: spacing["6xl"],
+    paddingTop: spacing["6xl"],
   },
   label: {
-    fontSize: 13,
-    fontWeight: "700",
-    color: "#374151",
-    marginBottom: 8,
+    fontSize: fonts.md,
+    fontWeight: fonts.weight.bold,
+    color: colors.textSecondary,
+    marginBottom: spacing.sm,
   },
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f5f8fd",
-    borderRadius: 30,
-    paddingHorizontal: 16,
-    height: 52,
+    backgroundColor: colors.backgroundInput,
+    borderRadius: radius.full,
+    paddingHorizontal: spacing.xl,
+    height: spacing.inputHeight,
     borderWidth: 1,
-    borderColor: "#eef2f9",
+    borderColor: colors.borderLight,
   },
   input: {
     flex: 1,
-    marginLeft: 10,
-    fontSize: 15,
-    color: "#111827",
+    marginLeft: spacing.md,
+    fontSize: fonts.lg,
+    color: colors.text,
   },
   forgotWrapper: {
     alignSelf: "flex-end",
-    marginTop: 14,
+    marginTop: spacing.lg,
   },
   forgotText: {
-    color: "#3b82f6",
-    fontSize: 13,
-    fontWeight: "600",
+    color: colors.primaryLight,
+    fontSize: fonts.md,
+    fontWeight: fonts.weight.semibold,
   },
   primaryButton: {
-    height: 54,
-    borderRadius: 16,
+    height: spacing.buttonHeight,
+    borderRadius: radius.button,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 16,
-    shadowColor: "#1e2a63",
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 6,
+    marginTop: spacing.xl,
+    ...shadows.button,
   },
   primaryButtonText: {
-    color: "#ffffff",
-    fontSize: 17,
-    fontWeight: "700",
+    color: colors.white,
+    fontSize: fonts.xl,
+    fontWeight: fonts.weight.bold,
   },
   dividerRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 22,
+    marginTop: spacing["4xl"],
   },
   divider: {
     flex: 1,
     height: 1,
-    backgroundColor: "#e5e7eb",
+    backgroundColor: colors.border,
   },
   dividerText: {
     marginHorizontal: 12,
-    color: "#9ca3af",
-    fontSize: 12,
-    fontWeight: "600",
+    color: colors.textMuted,
+    fontSize: fonts.sm,
+    fontWeight: fonts.weight.semibold,
   },
   socialRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 22,
-    gap: 14,
+    marginTop: spacing["4xl"],
+    gap: spacing.lg,
   },
   socialButton: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    height: 52,
-    borderRadius: 30,
+    height: spacing.inputHeight,
+    borderRadius: radius.full,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
-    gap: 8,
+    borderColor: colors.border,
+    gap: spacing.sm,
   },
   socialText: {
-    fontSize: 15,
-    fontWeight: "600",
-    color: "#374151",
+    fontSize: fonts.lg,
+    fontWeight: fonts.weight.semibold,
+    color: colors.textSecondary,
   },
   footer: {
-    paddingBottom: 30,
+    paddingBottom: spacing["7xl"],
     alignItems: "center",
   },
   footerText: {
-    color: "#9ca3af",
-    fontSize: 13,
+    color: colors.textMuted,
+    fontSize: fonts.md,
   },
   footerLink: {
-    color: "#3b82f6",
-    fontWeight: "700",
+    color: colors.primaryLight,
+    fontWeight: fonts.weight.bold,
   },
 })

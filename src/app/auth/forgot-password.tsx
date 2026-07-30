@@ -11,6 +11,9 @@ import {
 import { LinearGradient } from "expo-linear-gradient"
 import { ChevronLeft, Globe, Phone } from "lucide-react-native"
 import { useRouter } from "expo-router"
+import { colors, fonts, spacing, radius, shadows, iconSize } from "@/constants/theme"
+import { layout } from "@/constants/layout"
+import { en } from "@/translation/en"
 
 export default function ForgetPasswordScreen() {
   const router = useRouter()
@@ -21,83 +24,77 @@ export default function ForgetPasswordScreen() {
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="dark-content" />
-
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <ChevronLeft size={20} color="#1e3a8a" />
+          <ChevronLeft size={iconSize.lg} color={colors.primary} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Forget Password</Text>
+        <Text style={styles.headerTitle}>{en.auth.forgetPasswordTitle}</Text>
         <View style={{ width: 36 }} />
       </View>
       <View style={styles.headerDivider} />
-
       <View style={styles.body}>
-        <Text style={styles.label}>Email Address</Text>
+        <Text style={styles.label}>{en.auth.emailAddress}</Text>
         <View style={styles.inputWrapper}>
-          <Globe size={18} color="#3b82f6" />
+          <Globe size={iconSize.md} color={colors.primaryLight} />
           <TextInput
             style={styles.input}
-            placeholder="email@gmail.com"
-            placeholderTextColor="#9ca3af"
+            placeholder={en.auth.emailPlaceholder3}
+            placeholderTextColor={colors.textMuted}
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
             keyboardType="email-address"
           />
         </View>
-
-        <Text style={styles.orText}>OR</Text>
-
-        <Text style={styles.label}>Phone Number</Text>
+        <Text style={styles.orText}>{en.auth.or}</Text>
+        <Text style={styles.label}>{en.auth.phoneNumber}</Text>
         <View style={styles.inputWrapper}>
-          <Phone size={18} color="#3b82f6" />
+          <Phone size={iconSize.md} color={colors.primaryLight} />
           <TextInput
             style={styles.input}
-            placeholder="+91987xxxxxxx"
-            placeholderTextColor="#9ca3af"
+            placeholder={en.auth.phonePlaceholder2}
+            placeholderTextColor={colors.textMuted}
             value={phone}
             onChangeText={setPhone}
             keyboardType="phone-pad"
           />
         </View>
-
-        <Text style={[styles.label, { marginTop: 24 }]}>Submit OTP</Text>
+        <Text style={[styles.label, { marginTop: spacing["5xl"] }]}>
+          {en.auth.submitOtp}
+        </Text>
         <View style={styles.inputWrapper}>
           <TextInput
             style={[styles.input, styles.otpInput]}
-            placeholder="OTP"
-            placeholderTextColor="#9ca3af"
+            placeholder={en.auth.otpPlaceholder}
+            placeholderTextColor={colors.textMuted}
             value={otp}
             onChangeText={setOtp}
             keyboardType="number-pad"
             textAlign="center"
           />
         </View>
-
         <TouchableOpacity style={styles.sendOtpWrapper} onPress={() => {}}>
-          <Text style={styles.sendOtpText}>Send OTP</Text>
+          <Text style={styles.sendOtpText}>{en.auth.sendOtp}</Text>
         </TouchableOpacity>
-
         <Text style={styles.resendText}>
-          Didn&apos;t receive code? <Text style={styles.resendLink}>Resend in 0:48</Text>
+          {en.auth.didntReceiveCode}{" "}
+          <Text style={styles.resendLink}>{en.auth.resendIn}</Text>
         </Text>
-
         <TouchableOpacity
           activeOpacity={0.9}
           style={styles.buttonWrapper}
-          onPress={() => router.replace("/(tabs)")}
+          onPress={() => router.replace("/home")}
         >
           <LinearGradient
-            colors={["#1e2a63", "#2a3f8f"]}
+            colors={colors.gradientButton}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.primaryButton}
           >
-            <Text style={styles.primaryButtonText}>Submit</Text>
+            <Text style={styles.primaryButtonText}>{en.auth.submit}</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>
@@ -108,58 +105,58 @@ export default function ForgetPasswordScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: colors.background,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 24,
-    paddingVertical: 14,
+    paddingHorizontal: spacing["5xl"],
+    paddingVertical: spacing.lg,
   },
   backButton: {
     width: 36,
     height: 36,
-    borderRadius: 18,
-    backgroundColor: "#eef2fb",
+    borderRadius: radius.xl,
+    backgroundColor: colors.backgroundMuted,
     alignItems: "center",
     justifyContent: "center",
   },
   headerTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: "#374151",
+    fontSize: fonts["2xl"],
+    fontWeight: fonts.weight.bold,
+    color: colors.textSecondary,
   },
   headerDivider: {
     height: 1,
-    backgroundColor: "#f1f1f4",
+    backgroundColor: colors.borderMuted,
   },
   body: {
     flex: 1,
-    paddingHorizontal: 28,
-    paddingTop: 24,
+    paddingHorizontal: spacing["6xl"],
+    paddingTop: spacing["5xl"],
   },
   label: {
-    fontSize: 13,
-    fontWeight: "700",
-    color: "#374151",
-    marginBottom: 8,
+    fontSize: fonts.md,
+    fontWeight: fonts.weight.bold,
+    color: colors.textSecondary,
+    marginBottom: spacing.sm,
   },
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f5f8fd",
-    borderRadius: 30,
-    paddingHorizontal: 16,
-    height: 52,
+    backgroundColor: colors.backgroundInput,
+    borderRadius: radius.full,
+    paddingHorizontal: spacing.xl,
+    height: spacing.inputHeight,
     borderWidth: 1,
-    borderColor: "#eef2f9",
+    borderColor: colors.borderLight,
   },
   input: {
     flex: 1,
-    marginLeft: 10,
-    fontSize: 15,
-    color: "#111827",
+    marginLeft: spacing.md,
+    fontSize: fonts.lg,
+    color: colors.text,
   },
   otpInput: {
     marginLeft: 0,
@@ -167,46 +164,42 @@ const styles = StyleSheet.create({
   },
   orText: {
     textAlign: "center",
-    fontSize: 13,
-    fontWeight: "700",
-    color: "#111827",
-    marginVertical: 18,
+    fontSize: fonts.md,
+    fontWeight: fonts.weight.bold,
+    color: colors.text,
+    marginVertical: spacing["2xl"],
   },
   sendOtpWrapper: {
-    marginTop: 22,
+    marginTop: spacing["4xl"],
   },
   sendOtpText: {
-    color: "#6b7cff",
-    fontSize: 22,
-    fontWeight: "700",
+    color: colors.primaryLight,
+    fontSize: fonts["4xl"],
+    fontWeight: fonts.weight.bold,
   },
   resendText: {
     textAlign: "center",
-    marginTop: 40,
-    fontSize: 13,
-    color: "#9ca3af",
+    marginTop: spacing["8xl"],
+    fontSize: fonts.md,
+    color: colors.textMuted,
   },
   resendLink: {
-    color: "#3b82f6",
-    fontWeight: "700",
+    color: colors.primaryLight,
+    fontWeight: fonts.weight.bold,
   },
   buttonWrapper: {
-    marginTop: 24,
+    marginTop: spacing["5xl"],
   },
   primaryButton: {
-    height: 58,
-    borderRadius: 16,
+    height: layout.button.heightLg,
+    borderRadius: radius.button,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#1e2a63",
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 6,
+    ...shadows.button,
   },
   primaryButtonText: {
-    color: "#ffffff",
-    fontSize: 18,
-    fontWeight: "700",
+    color: colors.white,
+    fontSize: fonts["2xl"],
+    fontWeight: fonts.weight.bold,
   },
 })

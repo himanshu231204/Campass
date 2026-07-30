@@ -19,6 +19,8 @@ import {
   View,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { colors, fonts, spacing, radius, shadows, iconSize } from "@/constants/theme";
+import { en } from "@/translation/en";
 
 export default function CreateAccountScreen() {
   const router = useRouter();
@@ -32,121 +34,112 @@ export default function CreateAccountScreen() {
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="dark-content" />
-
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <ChevronLeft size={20} color="#1e3a8a" />
+          <ChevronLeft size={iconSize.lg} color={colors.primary} />
         </TouchableOpacity>
-
-        <Text style={styles.headerTitle}>Create Account</Text>
-
+        <Text style={styles.headerTitle}>{en.auth.createAccountTitle}</Text>
         <View style={{ width: 36 }} />
       </View>
       <View style={styles.headerDivider} />
-
       <ScrollView
         style={styles.body}
         contentContainerStyle={styles.bodyContent}
         showsVerticalScrollIndicator={false}
       >
-        <Field label="Full Name">
-          <User size={18} color="#3b82f6" />
+        <Field label={en.auth.fullName}>
+          <User size={iconSize.md} color={colors.primaryLight} />
           <TextInput
             style={styles.input}
-            placeholder="Name"
-            placeholderTextColor="#9ca3af"
+            placeholder={en.auth.namePlaceholder}
+            placeholderTextColor={colors.textMuted}
             value={name}
             onChangeText={setName}
           />
         </Field>
-
-        <Field label="Email Address">
-          <Globe size={18} color="#3b82f6" />
+        <Field label={en.auth.emailAddress}>
+          <Globe size={iconSize.md} color={colors.primaryLight} />
           <TextInput
             style={styles.input}
-            placeholder="arjun@college.edu"
-            placeholderTextColor="#9ca3af"
+            placeholder={en.auth.emailPlaceholder2}
+            placeholderTextColor={colors.textMuted}
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
             keyboardType="email-address"
           />
         </Field>
-
-        <Field label="Phone Number">
-          <Phone size={18} color="#3b82f6" />
+        <Field label={en.auth.phoneNumber}>
+          <Phone size={iconSize.md} color={colors.primaryLight} />
           <TextInput
             style={styles.input}
-            placeholder="+919876xxxx"
-            placeholderTextColor="#9ca3af"
+            placeholder={en.auth.phonePlaceholder}
+            placeholderTextColor={colors.textMuted}
             value={phone}
             onChangeText={setPhone}
             keyboardType="phone-pad"
           />
         </Field>
-
-        <Field label="Password">
-          <Lock size={18} color="#3b82f6" />
+        <Field label={en.auth.password}>
+          <Lock size={iconSize.md} color={colors.primaryLight} />
           <TextInput
             style={styles.input}
             placeholder="••••••••"
-            placeholderTextColor="#9ca3af"
+            placeholderTextColor={colors.textMuted}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
           />
         </Field>
-
-        <Field label="Confirm Password">
-          <Lock size={18} color="#3b82f6" />
+        <Field label={en.auth.confirmPassword}>
+          <Lock size={iconSize.md} color={colors.primaryLight} />
           <TextInput
             style={styles.input}
             placeholder="••••••••"
-            placeholderTextColor="#9ca3af"
+            placeholderTextColor={colors.textMuted}
             value={confirm}
             onChangeText={setConfirm}
             secureTextEntry
           />
         </Field>
-
         <View style={styles.termsRow}>
           <TouchableOpacity onPress={() => setAgree(!agree)}>
             <CheckCircle2
-              size={20}
-              color={agree ? "#2563eb" : "#cbd5e1"}
-              fill={agree ? "#2563eb" : "transparent"}
+              size={iconSize.lg}
+              color={agree ? colors.primaryMid : colors.textLight}
+              fill={agree ? colors.primaryMid : "transparent"}
               strokeWidth={agree ? 2 : 1.5}
             />
           </TouchableOpacity>
           <Text style={styles.termsText}>
-            I agree to the{" "}
-            <Text style={styles.termsLink}>Terms of Service</Text> and{" "}
-            <Text style={styles.termsLink}>Privacy Policy</Text>
+            {en.auth.agreeTerms}{" "}
+            <Text style={styles.termsLink}>{en.auth.termsOfService}</Text>{" "}
+            {en.auth.and}{" "}
+            <Text style={styles.termsLink}>{en.auth.privacyPolicy}</Text>
           </Text>
         </View>
-
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() => router.replace("/(tabs)")}
+          onPress={() => router.replace("/home")}
         >
           <LinearGradient
-            colors={["#1e2a63", "#2a3f8f"]}
+            colors={colors.gradientButton}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.primaryButton}
           >
-            <Text style={styles.primaryButtonText}>Create Account</Text>
+            <Text style={styles.primaryButtonText}>
+              {en.auth.createAccount}
+            </Text>
           </LinearGradient>
         </TouchableOpacity>
-
         <TouchableOpacity onPress={() => router.push("/auth/login")}>
           <Text style={styles.footerText}>
-            Already have an account?{" "}
-            <Text style={styles.footerLink}>Sign in</Text>
+            {en.auth.alreadyHaveAccount}{" "}
+            <Text style={styles.footerLink}>{en.auth.signInLink}</Text>
           </Text>
         </TouchableOpacity>
       </ScrollView>
@@ -172,104 +165,100 @@ function Field({
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: colors.background,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 24,
-    paddingVertical: 14,
+    paddingHorizontal: spacing["5xl"],
+    paddingVertical: spacing.lg,
   },
   backButton: {
     width: 36,
     height: 36,
-    borderRadius: 18,
-    backgroundColor: "#eef2fb",
+    borderRadius: radius.xl,
+    backgroundColor: colors.backgroundMuted,
     alignItems: "center",
     justifyContent: "center",
   },
   headerTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: "#374151",
+    fontSize: fonts["2xl"],
+    fontWeight: fonts.weight.bold,
+    color: colors.textSecondary,
   },
   headerDivider: {
     height: 1,
-    backgroundColor: "#f1f1f4",
+    backgroundColor: colors.borderMuted,
   },
   body: {
     flex: 1,
   },
   bodyContent: {
-    paddingHorizontal: 24,
-    paddingTop: 24,
-    paddingBottom: 40,
+    paddingHorizontal: spacing["5xl"],
+    paddingTop: spacing["5xl"],
+    paddingBottom: spacing["8xl"],
   },
   fieldGroup: {
-    marginBottom: 18,
+    marginBottom: spacing["2xl"],
   },
   label: {
-    fontSize: 13,
-    fontWeight: "700",
-    color: "#374151",
-    marginBottom: 8,
+    fontSize: fonts.md,
+    fontWeight: fonts.weight.bold,
+    color: colors.textSecondary,
+    marginBottom: spacing.sm,
   },
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f5f8fd",
-    borderRadius: 30,
-    paddingHorizontal: 16,
-    height: 52,
+    backgroundColor: colors.backgroundInput,
+    borderRadius: radius.full,
+    paddingHorizontal: spacing.xl,
+    height: spacing.inputHeight,
     borderWidth: 1,
-    borderColor: "#eef2f9",
+    borderColor: colors.borderLight,
   },
   input: {
     flex: 1,
-    marginLeft: 10,
-    fontSize: 15,
-    color: "#111827",
+    marginLeft: spacing.md,
+    fontSize: fonts.lg,
+    color: colors.text,
   },
   termsRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 2,
-    marginBottom: 22,
+    marginTop: spacing.xs,
+    marginBottom: spacing["4xl"],
   },
   termsText: {
     flex: 1,
-    marginLeft: 10,
-    fontSize: 12,
-    color: "#9ca3af",
+    marginLeft: spacing.md,
+    fontSize: fonts.sm,
+    color: colors.textMuted,
   },
   termsLink: {
-    color: "#6b7cff",
+    color: colors.primaryLight,
   },
   primaryButton: {
-    height: 56,
-    borderRadius: 16,
+    height: spacing.buttonHeightLg,
+    borderRadius: radius.button,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#1e2a63",
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 6,
+    ...shadows.button,
   },
   primaryButtonText: {
-    color: "#ffffff",
-    fontSize: 17,
-    fontWeight: "700",
+    color: colors.white,
+    fontSize: fonts.xl,
+    fontWeight: fonts.weight.bold,
   },
   footerText: {
     textAlign: "center",
-    marginTop: 20,
-    color: "#9ca3af",
-    fontSize: 13,
+    marginTop: spacing["3xl"],
+    color: colors.textMuted,
+    fontSize: fonts.md,
   },
   footerLink: {
-    color: "#3b82f6",
-    fontWeight: "700",
+    color: colors.primaryLight,
+    fontWeight: fonts.weight.bold,
   },
 });
