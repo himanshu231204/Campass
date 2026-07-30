@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Dimensions,
   StatusBar,
-  SafeAreaView,
 } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { LinearGradient } from "expo-linear-gradient"
 import { useRouter } from "expo-router"
 import {
@@ -105,8 +105,10 @@ const budgetLines = [
 
 export default function ExploreDetailsScreen() {
   const router = useRouter()
+  const insets = useSafeAreaInsets()
+
   return (
-    <SafeAreaView style={styles.safe}>
+    <View style={[styles.safe, { paddingTop: insets.top }]}>
       <StatusBar barStyle="light-content" />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -372,7 +374,7 @@ export default function ExploreDetailsScreen() {
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 
